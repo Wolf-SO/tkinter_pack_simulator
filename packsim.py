@@ -69,15 +69,10 @@ class Application(tk.Frame):
         for child in self.contents_frame.winfo_children():
             child.destroy()
         self.contents_frame.pack(side="top", fill="both", expand=True)
-        self.items = []
-        self.items.append(tk.Label(self.contents_frame))
         for x in range(self.item_count):
-            self.items.append(tk.Label(self.contents_frame))
-            self.items[x] = tk.Label(self.contents_frame)
-            self.items[x]["text"] = "Item " + str(x+1)
-            self.items[x]["bg"] = self.item_colors[x]
             if self.creates[x].get():
-                self.items[x].pack(side=self.sides[x].get(), fill=self.fills[x].get(), expand=self.expands[x].get())
+                item = tk.Label(self.contents_frame, text=f"Item {1+x}", bg=self.item_colors[x])
+                item.pack(side=self.sides[x].get(), fill=self.fills[x].get(), expand=self.expands[x].get())
 
 root = tk.Tk()
 app = Application(master=root)
