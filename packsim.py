@@ -25,13 +25,17 @@ class Application(tk.Frame):
         self.contents_frame.pack(side="top", fill="both",expand=True)
 
     def layout_control_panel(self):
-        tk.Label(self.control_panel, text="pack").grid(column=0, row=1,sticky="news")
-        tk.Label(self.control_panel, text="side").grid(column=0, row=2,sticky="news")
-        tk.Label(self.control_panel, text="fill").grid(column=0, row=3,sticky="news")
-        tk.Label(self.control_panel, text="expand").grid(column=0, row=4,sticky="news")
+        tk.Label(self.control_panel, text="pack").grid(column=0, row=1, sticky="news")
+        tk.Label(self.control_panel, text="side").grid(column=0, row=2, sticky="news")
+        tk.Label(self.control_panel, text="fill").grid(column=0, row=3, sticky="news")
+        tk.Label(self.control_panel, text="expand").grid(column=0, row=4, sticky="news")
         for x in range(1,self.item_count+1):
             tk.Label(self.control_panel, text="Item " + str(x)).grid(column=x,row=0)
 
+        self.creates = []
+        self.creates.append(tk.BooleanVar())
+        self.creates[0].set(False)
+        
         self.sides = []
         self.sides.append(tk.StringVar())
         self.sides[0].set("top")
@@ -39,10 +43,6 @@ class Application(tk.Frame):
         self.fills = []
         self.fills.append(tk.StringVar())
         self.fills[0].set("none")
-
-        self.creates = []
-        self.creates.append(tk.BooleanVar())
-        self.creates[0].set(False)
 
         self.expands = []
         self.expands.append(tk.BooleanVar())
@@ -63,7 +63,6 @@ class Application(tk.Frame):
 
             self.creates.append(tk.BooleanVar())
             self.creates[y].set(y <= self.default_item_count)
-
 
             chk1 = ttk.Checkbutton(self.control_panel,variable=self.creates[y],command=self.layout_items)
             chk1.grid(column=y,row=1)
@@ -88,9 +87,6 @@ class Application(tk.Frame):
             self.items[x]["bg"] = self.item_colors[x-1]
             if self.creates[x].get():
                 self.items[x].pack(side=self.sides[x].get(), fill=self.fills[x].get(), expand=self.expands[x].get())
-
-    def say_hi(self):
-        print("hi there, everyone!")
 
 root = tk.Tk()
 app = Application(master=root)
