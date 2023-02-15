@@ -29,26 +29,24 @@ class Application(tk.Frame):
         tk.Label(self.control_panel, text="side").grid(column=0, row=2, sticky="news")
         tk.Label(self.control_panel, text="fill").grid(column=0, row=3, sticky="news")
         tk.Label(self.control_panel, text="expand").grid(column=0, row=4, sticky="news")
-        for x in range(1,self.item_count+1):
-            tk.Label(self.control_panel, text="Item " + str(x)).grid(column=x,row=0)
+        for x in range(self.item_count):
+            tk.Label(self.control_panel, text="Item " + str(x+1)).grid(column=x, row=0)
 
         self.creates = []
-        self.creates.append(tk.BooleanVar())
-        self.creates[0].set(False)
         
         self.sides = []
-        self.sides.append(tk.StringVar())
-        self.sides[0].set("top")
 
         self.fills = []
-        self.fills.append(tk.StringVar())
-        self.fills[0].set("none")
 
         self.expands = []
-        self.expands.append(tk.BooleanVar())
-        self.expands[0].set(False)
 
-        for y in range(1,self.item_count+1):
+        for y in range(self.item_count):
+        
+            self.creates.append(tk.BooleanVar())
+            self.creates[y].set(y < self.default_item_count)
+            chk1 = ttk.Checkbutton(self.control_panel,variable=self.creates[y],command=self.layout_items)
+            chk1.grid(column=y,row=1)
+        
             self.sides.append(tk.StringVar())
             self.sides[y].set("top")
             cb1 = ttk.Combobox(self.control_panel,textvariable=self.sides[y],state="readonly",values=['top', 'bottom', 'left', 'right'], width=7)
@@ -61,17 +59,10 @@ class Application(tk.Frame):
             cb2.bind("<<ComboboxSelected>>", self.layout_items)
             cb2.grid(column=y,row=3)
 
-            self.creates.append(tk.BooleanVar())
-            self.creates[y].set(y <= self.default_item_count)
-
-            chk1 = ttk.Checkbutton(self.control_panel,variable=self.creates[y],command=self.layout_items)
-            chk1.grid(column=y,row=1)
-
             self.expands.append(tk.BooleanVar())
             self.expands[y].set(False)
             chk2 = ttk.Checkbutton(self.control_panel,variable=self.expands[y],command=self.layout_items)
             chk2.grid(column=y,row=4)
-
 
     def layout_items(self,*args):
         self.contents_frame.pack_forget()
@@ -80,11 +71,11 @@ class Application(tk.Frame):
         self.contents_frame.pack(side="top", fill="both", expand=True)
         self.items = []
         self.items.append(tk.Label(self.contents_frame))
-        for x in range(1,self.item_count+1):
+        for x in range(self.item_count):
             self.items.append(tk.Label(self.contents_frame))
             self.items[x] = tk.Label(self.contents_frame)
-            self.items[x]["text"] = "Item " + str(x)
-            self.items[x]["bg"] = self.item_colors[x-1]
+            self.items[x]["text"] = "Item " + str(x+1)
+            self.items[x]["bg"] = self.item_colors[x]
             if self.creates[x].get():
                 self.items[x].pack(side=self.sides[x].get(), fill=self.fills[x].get(), expand=self.expands[x].get())
 
