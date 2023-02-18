@@ -48,7 +48,7 @@ class Application(tk.Frame):
         tk.Label(self.control_panel, text="expand").grid(column=0, row=4, sticky="news")
         
         for x in range(self.item_count):
-            tk.Label(self.control_panel, text=f"Item {1+x}").grid(column=x, row=0)
+            tk.Label(self.control_panel, text=f"Item {1+x}").grid(column=1+x, row=0)
 
             self.creates.append(tk.BooleanVar())
             self.creates[x].set(x < self.default_item_count)
