@@ -24,6 +24,7 @@ class Application(tk.Frame):
         self.sides = []
         self.fills = []
         self.expands = []
+        self.items = []
         
         self.layout_panels()
         self.layout_control_panel()
@@ -36,6 +37,9 @@ class Application(tk.Frame):
         self.simulation_panel.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
         self.contents_frame = tk.Frame(self.simulation_panel, bg="gray31")
         self.contents_frame.pack(side="top", fill="both", expand=True)
+        
+        for x in range(self.item_count):
+            self.items.append(tk.Label(self.contents_frame, text=f"Item {1+x}", bg=self.item_colors[x]))
 
     def layout_control_panel(self):
         tk.Label(self.control_panel, text="pack").grid(column=0, row=1, sticky="news")
@@ -85,14 +89,11 @@ class Application(tk.Frame):
             chk2.grid(column=x, row=4)
 
     def layout_items(self,*args):
-        self.contents_frame.pack_forget()
-        for child in self.contents_frame.winfo_children():
-            child.destroy()
-        self.contents_frame.pack(side="top", fill="both", expand=True)
-        for x in range(self.item_count):
-            if self.creates[x].get():
-                item = tk.Label(self.contents_frame, text=f"Item {1+x}", bg=self.item_colors[x])
-                item.pack(side=self.sides[x].get(), fill=self.fills[x].get(), expand=self.expands[x].get())
+        for item in self.items:
+            item.pack_forget()
+        for i, item in enumerate(self.items):
+            if self.creates[i].get():
+                item.pack(side=self.sides[i].get(), fill=self.fills[i].get(), expand=self.expands[i].get())
 
 root = tk.Tk()
 app = Application(master=root)
