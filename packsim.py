@@ -56,7 +56,7 @@ class Application(tk.Frame):
                 self.control_panel, 
                 variable=self.creates[x], 
                 command=self.layout_items)
-            chk1.grid(column=x, row=1)
+            chk1.grid(column=1+x, row=1)
         
             self.sides.append(tk.StringVar())
             self.sides[x].set("top")
@@ -67,7 +67,7 @@ class Application(tk.Frame):
                 values=['top', 'bottom', 'left', 'right'], 
                 width=7)
             cb1.bind("<<ComboboxSelected>>", self.layout_items)
-            cb1.grid(column=x, row=2)
+            cb1.grid(column=1+x, row=2)
 
             self.fills.append(tk.StringVar())
             self.fills[x].set("none")
@@ -78,7 +78,7 @@ class Application(tk.Frame):
                 values=['none', 'x', 'y', 'both'], 
                 width=7)
             cb2.bind("<<ComboboxSelected>>", self.layout_items)
-            cb2.grid(column=x, row=3)
+            cb2.grid(column=1+x, row=3)
 
             self.expands.append(tk.BooleanVar())
             self.expands[x].set(False)
@@ -86,7 +86,7 @@ class Application(tk.Frame):
                 self.control_panel,
                 variable=self.expands[x],
                 command=self.layout_items)
-            chk2.grid(column=x, row=4)
+            chk2.grid(column=1+x, row=4)
 
     def layout_items(self,*args):
         for item in self.items:
